@@ -1,45 +1,98 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SIBUQ</title>
-  <link rel="icon" href="https://drive.google.com/file/d/1ne1ItNZQbECLmC8z4mu8YDz2FRQGCzBE/view?usp=sharing" />
+  <meta charset="UTF-8">
+  <title>Portal Aplikasi</title>
+
+  <!-- Viewport WAJIB untuk responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
   <style>
+    /* ===============================
+       RESET DASAR
+       =============================== */
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
-      height: 100%;
+      min-height: 100%;
       background-color: #eee;
-      overflow: hidden; /* Mencegah scroll ganda */
+      overflow-x: hidden;
+      overflow-y: auto; /* ✅ IZINKAN SCROLL */
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     }
 
+    /* ===============================
+       CONTAINER IFRAME
+       =============================== */
     .iframe-container {
       width: 100%;
-      height: 100dvh; /* Menggunakan dvh agar pas di mobile browser */
-      overflow: hidden;
+      min-height: 100vh;   /* BUKAN height */
+      display: block;
     }
 
     iframe {
       display: block;
       width: 100%;
-      height: 100%;
+      min-height: 100vh;
       border: none;
+      background-color: transparent;
+    }
+
+    /* ===============================
+       OPSIONAL: LOADING OVERLAY
+       =============================== */
+    .loading {
+      position: fixed;
+      inset: 0;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #555;
+      z-index: 9999;
+    }
+
+    .loading.hidden {
+      display: none;
     }
   </style>
 </head>
+
 <body>
+
+  <!-- OPSIONAL: LOADING -->
+  <div id="loading" class="loading">
+    Memuat aplikasi…
+  </div>
+
+  <!-- IFRAME -->
   <div class="iframe-container">
     <iframe
-      id="app"
+      id="appFrame"
       src="https://script.google.com/macros/s/AKfycbwB7GjiSZfq48ZBFdQumN6tN7PXvd1n0nXNTJSBPb6b6i1iaRFJoS231J2kp_ZQG2HnKQ/exec"
-      scrolling="yes"
-      allowfullscreen="true"
-      webkitallowfullscreen="true"
-      mozallowfullscreen="true"
-      allow="fullscreen; camera; microphone; display-capture; geolocation;">
+      allowfullscreen
+      loading="eager">
     </iframe>
   </div>
+
+  <script>
+    const iframe = document.getElementById('appFrame');
+    const loading = document.getElementById('loading');
+
+    // Hilangkan loading saat iframe siap
+    iframe.addEventListener('load', () => {
+      loading.classList.add('hidden');
+    });
+
+    // OPSIONAL: ganti URL via query ?url=
+    const params = new URLSearchParams(window.location.search);
+    const customUrl = params.get('url');
+    if (customUrl) {
+      iframe.src = customUrl;
+    }
+  </script>
+
 </body>
 </html>
