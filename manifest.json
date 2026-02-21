@@ -1,6 +1,6 @@
 {
-  "name": "Portal Sistem Informasi",
-  "short_name": "Portal",
+  "name": "BUQ Information System",
+  "short_name": "BUQIS",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
